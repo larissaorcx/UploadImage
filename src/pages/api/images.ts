@@ -47,7 +47,6 @@ export default async function handler(
           .json({ error: `Sorry something Happened! ${err.message}` })
       );
   }
-
   if (req.method === 'GET') {
     const { after } = req.query;
 
@@ -55,7 +54,6 @@ export default async function handler(
       size: 6,
       ...(after && { after: query.Ref(query.Collection('images'), after) }),
     };
-
     return client
       .query<ImagesQueryResponse>(
         query.Map(
@@ -79,6 +77,7 @@ export default async function handler(
         });
       })
       .catch(err => {
+        // console.log('err', err)
         return res.status(400).json(err);
       });
   }

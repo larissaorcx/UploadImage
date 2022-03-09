@@ -23,7 +23,12 @@ interface FetchImgProps {
 
 export default function Home(): JSX.Element {
   async function fetchImg({ pageParam = null }): Promise<FetchImgProps> {
-    const response = await api.get(`/api/images?after=${pageParam}`);
+    const response = await api.get('/api/images', {
+      params: {
+        after: pageParam,
+      },
+    });
+
     return response;
   }
 
@@ -39,7 +44,7 @@ export default function Home(): JSX.Element {
   });
 
   const formattedData = useMemo(() => {
-    return data.pages.flatMap(dados => dados.data);
+    return data?.pages.flatMap(dados => dados.data);
   }, [data]);
 
   if (isLoading) {
